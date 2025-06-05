@@ -1,0 +1,70 @@
+
+.header_section_top {
+    display: flex;
+    justify-content: center;
+    background-color: #2b2a29;
+    height: auto;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.user{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+#loginCardContainer {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#loadingOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addReviewContainer {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-card {
+    height: 350px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-descricao {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Limita a 5 linhas */
+    -webkit-box-orient: vertical;
+}
+
+#reviewDetalhadaContainer .card {
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+.invisible {
+  visibility: hidden;
+  pointer-events: none;
+}

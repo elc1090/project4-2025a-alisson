@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho 3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header_section_top">
+
+        <div class = "user">
+            <button id="btnMostrarAddReview" class="btn btn-success ms-2 me-2">Adicionar Review</button>
+            <button id="btnMostrarReviewPublicas" class="btn btn-primary ms-2 me-2">Reviews Públicas</button>
+        </div>
+
+        <h4 id="reviewType" class="card-title text-center text-white">Reviews Públicas</h4>
+
+
+        <!-- Botão para exibir o login -->
+        <div class="user">
+            <button id="btnMostrarLogin" class="btn btn-outline-primary">Entrar / Registrar</button>
+            <span id="userInfo" class="ms-4 me-4 d-none"></span>
+            <button id="btnLogout" class="btn btn-secondary d-none">Logout</button>
+        </div>
+
+    </div>
+    
+    
+    <!-- Card de Login/Registro sobreposto -->
+    <div id="loginCardContainer" class="d-flex d-none">
+        <div class="card shadow-lg" style="max-width: 400px; width: 100%;">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-4">Login / Registro</h4>
+
+                <div class="mb-3">
+                    <label for="usuario" class="form-label">Nome de usuário</label>
+                    <input type="text" class="form-control" id="usuario" placeholder="Digite seu nome de usuário">
+                </div>
+
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" class="form-control" id="senha" placeholder="Senha">
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button id="btnRegistrar" class="btn btn-outline-primary">Registrar</button>
+                    <button id="btnLogin" class="btn btn-primary">Login</button>
+                    <button id="btnFecharLogin" class="btn btn-secondary mt-2">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card para adicionar Review de filme -->
+    <div id="addReviewContainer" class="d-none">
+        <div class="card p-4" style="width: 400px; max-width: 90%;">
+            <h5 class="card-title mb-3">Adicionar Review</h5>
+            
+            <div class="mb-3">
+                <label for="inputTitulo" class="form-label">Nome do filme</label>
+                <input type="text" class="form-control" id="inputTitulo" placeholder="Digite o título">
+            </div>
+            
+            <div class="mb-3">
+                <label for="inputImagem" class="form-label">URL da imagem</label>
+                <input type="url" class="form-control" id="inputImagem" placeholder="https://">
+            </div>
+            
+            <div class="mb-3">
+                <label for="selectNota" class="form-label">Nota</label>
+                <select class="form-select" id="selectNota">
+                    <!-- gera opções de 0 a 10 -->
+                    <option value="" selected disabled>Escolha a nota</option>
+                    <!-- opções serão preenchidas via JS -->
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="textareaReview" class="form-label">Review</label>
+                <textarea class="form-control" id="textareaReview" rows="4" placeholder="Escreva sua review"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label d-block">Visibilidade</label>
+                
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="visibilidade" id="visibilidadePrivado" value="false" checked>
+                    <label class="form-check-label" for="visibilidadePrivado">Privado</label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="visibilidade" id="visibilidadePublico" value="true">
+                    <label class="form-check-label" for="visibilidadePublico">Público</label>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <button id="btnCancelarAddReview" class="btn btn-secondary">Cancelar</button>
+                <button id="btnSalvarReview" class="btn btn-success">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini card da review de cada filme -->
+    <div class="container mt-4">
+        <div id="reviewsContainer" class="row g-4">
+        </div>
+    </div>
+
+    <!-- Card detalhado da review -->
+    <div id="reviewDetalhadaContainer" class="d-none position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: rgba(0,0,0,0.5); z-index: 1050;">
+        <div id="reviewDetalhadaCard" class="card p-4" style="width: 600px; max-width: 90%; max-height: 90vh; overflow-y: auto;">
+            <h2 id="reviewDetalhadaTitulo" class="card-title mb-3 text-left"></h2>
+            
+            <img id="reviewDetalhadaImagem" src="" alt="Imagem do filme" class="img-fluid mb-3" style="object-fit: contain; max-height: 300px; width: 100%; border-radius: 6px;">
+            
+            <p id="reviewDetalhadaTexto" class="mb-4" style="white-space: pre-line;"></p>
+            
+            <div class="text-muted text-end">
+                <small id="reviewDetalhadaAutorData"></small>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-3">
+                <div id="grupoAcoesEsquerda" class="d-flex gap-2">
+                    <button id="btnDeletarReview" class="btn btn-danger invisible">Deletar</button>
+                    <button id="btnEditarReview" class="btn btn-warning invisible">Editar</button>
+                </div>
+                
+                <button id="btnFecharDetalhada" class="btn btn-outline-secondary">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="d-none">
+        <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+    </div>
+
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/app.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>
