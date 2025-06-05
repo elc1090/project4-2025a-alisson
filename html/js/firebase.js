@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
+import { getAuth, GoogleAuthProvider} from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBgNQZSkHXx5Pr3nmitgVDIsIeo4vC70Jw",
@@ -15,6 +15,8 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 const auth = getAuth(app);
+auth.useDeviceLanguage();
+const provider = new GoogleAuthProvider();
 
 function mostrarLoading() {
     document.getElementById("loadingOverlay").classList.remove("d-none");
@@ -24,4 +26,4 @@ function esconderLoading() {
     document.getElementById("loadingOverlay").classList.add("d-none");
 }
 
-export { db, auth, mostrarLoading, esconderLoading };
+export { db, auth, provider, mostrarLoading, esconderLoading};

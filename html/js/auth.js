@@ -1,9 +1,10 @@
-import { auth, mostrarLoading, esconderLoading } from './firebase.js';
+import { auth, provider, mostrarLoading, esconderLoading } from './firebase.js';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
+    signInWithPopup
 } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
 
 // Elementos
@@ -114,5 +115,19 @@ onAuthStateChanged(auth, (user) => {
         btnLogout.classList.add("d-none");
         userInfo.classList.add("d-none");
         userInfo.textContent = "";
+    }
+});
+
+const btnLoginGoogle = document.getElementById("btnLoginGoogle");
+
+btnLoginGoogle.addEventListener("click", async () => {
+    mostrarLoading();
+    try {
+        await signInWithPopup(auth, provider);
+        loginCardContainer.classList.add("d-none");
+    } catch (e) {
+        alert("Erro ao fazer login com o Google: " + e.message);
+    } finally {
+        esconderLoading();
     }
 });
