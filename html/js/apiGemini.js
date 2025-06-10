@@ -21,17 +21,17 @@ async function gerarTexto(prompt, apiKey) {
     return data.candidates[0].content.parts[0].text;
 }
 
-// Teste:
-async function executarGeracao() {
-    const apiKey = ""; // (removi para não expor no historico de commits, mas esta funcionando, agora estou vendo como esconder a chave)
-    const prompt = "Escreva apenas \"Olá mundo!\", sem mais nada.";
+async function executarGeracao(tituloFilme) {
+    const apiKey = "AIzaSyCEtxAo0z5gq8AtMEbc7HRXpX5ictf1HbE"; // desisti de esconder a chave no backend, tenho pouco tempo esse final de semstre
+    const prompt = `Gere uma sinopse do filme \"${tituloFilme}\" de forma resumida, sem muitos spoilers em até 200 palavras`;
 
     try {
         const resultado = await gerarTexto(prompt, apiKey);
-        console.log("Resposta da Gemini:", resultado);
+        return resultado;
     } catch (erro) {
         console.error("Erro ao gerar texto:", erro);
+        return "Falha ao gerar sinopse com o Gemini."
     }
 }
 
-export { gerarTexto, executarGeracao };
+export {executarGeracao };

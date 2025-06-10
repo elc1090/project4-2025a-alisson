@@ -1,5 +1,6 @@
 import { db, auth, mostrarLoading, esconderLoading } from './firebase.js';
 import { collection, addDoc, deleteDoc, updateDoc, doc, serverTimestamp, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-firestore.js";
+import { executarGeracao } from './apiGemini.js';
 
 const selectNota = document.getElementById("selectNota");
 for(let i = 0; i <= 10; i++) {
@@ -21,6 +22,7 @@ const userInfo = document.getElementById("userInfo");
 const reviewType = document.getElementById("reviewType");
 
 let reviewEditandoId = null;
+let tituloOriginal = null; // para verificar se o título foi alterado, se sim, gerar nova sinopse
 
 btnMostrarAddReview.addEventListener("click", () => {
     addReviewContainer.classList.remove("d-none");
@@ -85,9 +87,12 @@ async function salvarNovaReview() {
             alert("Você precisa estar logado para salvar uma review.");
             return;
         }
+        
 
         mostrarLoading();
         try {
+            const sinopseGerada = await executarGeracao(titulo);
+            
             await addDoc(collection(db, "reviews"), {
                 title: titulo,
                 image: linkImagem,
@@ -96,7 +101,8 @@ async function salvarNovaReview() {
                 isPublic: isPublic,
                 userId: currentUser.uid,
                 username: currentUser.email.split("@")[0],
-                createdAt: serverTimestamp()
+                createdAt: serverTimestamp(),
+                sinopse: sinopseGerada
             });
             alert("Review salva!");
         } catch (e) {
@@ -138,8 +144,7 @@ async function editarReview() {
 
         mostrarLoading();
         try {
-            const reviewRef = doc(db, "reviews", reviewEditandoId);
-            await updateDoc(reviewRef, {
+            let camposAtualizados = {
                 title: titulo,
                 image: linkImagem,
                 rating: Number(nota),
@@ -147,7 +152,17 @@ async function editarReview() {
                 isPublic: isPublic,
                 // Não altera userId, username ou createdAt
                 updatedAt: serverTimestamp()
-            });
+            };
+
+            // se mudar o titulo, gera nova sinopse, pois pode ser outro filme
+            if (titulo !== tituloOriginal) {
+                const novaSinopse = await executarGeracao(titulo);
+                camposAtualizados.sinopse = novaSinopse;
+            }
+
+            const reviewRef = doc(db, "reviews", reviewEditandoId);
+            await updateDoc(reviewRef, camposAtualizados);
+
             alert("Review atualizada!");
         } catch (e) {
             console.error("Erro ao atualizar:", e);
@@ -166,6 +181,7 @@ async function editarReview() {
         alert("Erro ao editar review. Veja o console.");
     } finally {
         reviewEditandoId = null; // Limpa o ID de edição
+        tituloOriginal = null; // Limpa o título original
     }
 }
 
@@ -226,6 +242,8 @@ function abrirReviewDetalhada(review) {
         reviewDetalhadaAutorData.textContent = `Publicado por Desconhecido em ${dataFormatada}`;
     }
 
+    // ToDo: Adicionar campo para exibir a sinopse gerada
+
     const btnDeletar = document.getElementById("btnDeletarReview");
     const btnEditar = document.getElementById("btnEditarReview");
 
@@ -260,6 +278,7 @@ function abrirReviewDetalhada(review) {
 function editar(review) {
     // Guardar o id da review que será editada
     reviewEditandoId = review.id;
+    tituloOriginal = review.title;
 
     // Preencher campos do formulário
     document.getElementById("inputTitulo").value = review.title;
