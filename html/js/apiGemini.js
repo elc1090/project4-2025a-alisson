@@ -2,7 +2,7 @@ async function executarGeracao(tituloFilme) {
     const prompt = `Gere uma sinopse do filme \"${tituloFilme}\" de forma resumida, sem muitos spoilers em até 200 palavras`;
 
     try {
-        const resposta = await fetch("https://backendt4web.onrender.com", {
+        const resposta = await fetch("https://backendt4web.onrender.com/gerar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
