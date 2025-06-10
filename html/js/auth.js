@@ -6,6 +6,7 @@ import {
     onAuthStateChanged,
     signInWithPopup
 } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-auth.js";
+import { executarGeracao } from './apiGemini.js';
 
 // Elementos
 const username = document.getElementById("usuario");
@@ -22,6 +23,7 @@ const userInfo = document.getElementById("userInfo");
 btnMostrarLogin.addEventListener("click", () => {
     loginCardContainer.style.display = "flex";
     loginCardContainer.classList.remove("d-none");
+    executarGeracao();
 });
 
 btnFecharLogin.addEventListener("click", () => {
