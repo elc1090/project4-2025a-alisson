@@ -37,7 +37,9 @@ VS Code com as extensões:
 
 
 Chat GPT, exemplo resumido de prompt:
-
+Estou recebendo o erro `html/:1 Access to fetch at 'https://backendt4web.onrender.com/' from origin 'https://elc1090.github.io' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.` ao tentar fazer requisições pro meu backend.
+Resposta do gpt:
+Você precisa alterar o código do seu backend (no Render) para permitir requisições do seu front-end. Se estiver usando Express, adicione o seguinte: [...]
 
 
 

@@ -226,7 +226,10 @@ function abrirReviewDetalhada(review) {
     document.getElementById("reviewDetalhadaTitulo").textContent = review.title;
     document.getElementById("reviewDetalhadaImagem").src = review.image?.trim() !== "" ? review.image : "img/pipocaGPT.png";
 
+    document.getElementById("notaReview").textContent = `Nota: ${review.rating}`;
+    
     document.getElementById("reviewDetalhadaTexto").textContent = review.review;
+    document.getElementById("sinopseGerada").textContent = review.sinopse || "Sinopse não disponível.";
 
     const data = review.createdAt?.toDate?.() || new Date();
     const dataFormatada = data.toLocaleDateString("pt-BR");

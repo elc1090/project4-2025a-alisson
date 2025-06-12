@@ -70,14 +70,21 @@ btnLogin.addEventListener("click", async () => {
         await signInWithEmailAndPassword(auth, formatarEmailFake(username.value), senhaEl.value);
         loginCardContainer.classList.add("d-none");
     } catch (e) {
-        if (e.code === "auth/user-not-found") {
-            alert(`O usuário "${username.value}" não foi encontrado.`);
-        } else if (e.code === "auth/wrong-password") {
-            alert("Senha incorreta. Tente novamente.");
-        } else if (e.code === "auth/invalid-email") {
-            alert("Nome de usuário inválido.");
-        } else {
+        switch (e.code) {
+        case "auth/user-not-found":
+            alert(`O usuário "${username.value}" não foi encontrado. Você precisa se registrar primeiro.`);
+            break;
+        case "auth/wrong-password":
+        case "auth/invalid-email":
+        case "auth/invalid-credential":
+            alert("Usário ou senha incorretos. Verifique e tente novamente.");
+            break;
+        case "auth/too-many-requests":
+            alert("Muitas tentativas de login falharam. Tente novamente mais tarde.");
+            break;
+        default:
             alert("Erro ao fazer login: " + e.message);
+            break;
         }
     } finally {
         esconderLoading();
