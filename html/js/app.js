@@ -104,7 +104,6 @@ async function salvarNovaReview() {
                 createdAt: serverTimestamp(),
                 sinopse: sinopseGerada
             });
-            alert("Review salva!");
         } catch (e) {
             console.error("Erro ao salvar:", e);
             alert("Erro ao salvar. Veja o console.");
@@ -162,8 +161,6 @@ async function editarReview() {
 
             const reviewRef = doc(db, "reviews", reviewEditandoId);
             await updateDoc(reviewRef, camposAtualizados);
-
-            alert("Review atualizada!");
         } catch (e) {
             console.error("Erro ao atualizar:", e);
             alert("Erro ao atualizar. Veja o console.");
@@ -226,7 +223,7 @@ function abrirReviewDetalhada(review) {
     document.getElementById("reviewDetalhadaTitulo").textContent = review.title;
     document.getElementById("reviewDetalhadaImagem").src = review.image?.trim() !== "" ? review.image : "img/pipocaGPT.png";
 
-    document.getElementById("notaReview").textContent = `Nota: ${review.rating}`;
+    document.getElementById("notaReview").innerHTML = `Nota: ${gerarEstrelasHTML(review.rating)}`;
     
     document.getElementById("reviewDetalhadaTexto").textContent = review.review;
     document.getElementById("sinopseGerada").textContent = review.sinopse || "Sinopse não disponível.";
@@ -244,8 +241,6 @@ function abrirReviewDetalhada(review) {
     else {
         reviewDetalhadaAutorData.textContent = `Publicado por Desconhecido em ${dataFormatada}`;
     }
-
-    // ToDo: Adicionar campo para exibir a sinopse gerada
 
     const btnDeletar = document.getElementById("btnDeletarReview");
     const btnEditar = document.getElementById("btnEditarReview");
@@ -276,6 +271,25 @@ function abrirReviewDetalhada(review) {
     }
 
     reviewDetalhadaContainer.classList.remove("d-none");
+}
+
+function gerarEstrelasHTML(nota) {
+    const estrelas = [];
+    const cheias = Math.floor(nota / 2);
+    const meia = nota % 2 === 1 ? 1 : 0;
+    const vazias = 5 - cheias - meia;
+
+    for (let i = 0; i < cheias; i++) {
+        estrelas.push('<i class="bi bi-star-fill text-warning"></i>');
+    }
+    if (meia) {
+        estrelas.push('<i class="bi bi-star-half text-warning"></i>');
+    }
+    for (let i = 0; i < vazias; i++) {
+        estrelas.push('<i class="bi bi-star text-warning"></i>');
+    }
+
+    return estrelas.join(" ");
 }
 
 function editar(review) {
