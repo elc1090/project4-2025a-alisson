@@ -6,15 +6,15 @@ Imagens do **site criado**:
 Acesso: https://elc1090.github.io/project4-2025a-alisson/html/
 
 
-#### Desenvolvedor
+### Desenvolvedor
 Álisson Braga Canabarro, Ciência da Computação
 
 
-##### Descrição
+### Descrição
 É uma continuação do [Projeto 3](https://github.com/elc1090/project3-2025a-alissonbc), que é um site de compartilhamento de reviews de filmes. Nessa nova versão foi adicionado a opção para poder fazer login usando uma conta do Google e foi adicionado um campo para sinopse gerada pelo Gemini, sobre o filme que foi feita a review.  
 Foram feitas outras pequenas mudanças visuais, como a adição de icone de estrelas para indicar que nota o usuário deu para o filme na hora de fazer a review.  
 
-#### Desenvolvimento
+### Desenvolvimento
 Para esse projeto tive menos tempo livre para focar no desenvolvimento, então decidi focar apenas nos requisitos dele:  
 - Implemente um cadastro de usuários com login federado usando um provedor de identidade;
 - Utilize uma API externa de "IA como serviço"
@@ -25,7 +25,7 @@ Para a API de IA, decidi que no contexto desse projeto ela poderia ser utilizada
 `Gere uma sinopse do filme \"${tituloFilme}\"`  
 Inicialmente eu chamava a API com minha chave no front-end, mas após receber um aviso do GitHub sobre a chave exposta, resolvi mover para um back-end. Comecei pelo Replit, mas ao notar que a URL que ele gerava era temporaria, mudei para o Render.  
 
-#### Tecnologias
+### Tecnologias
 
 - HTML
 - CSS
@@ -34,12 +34,12 @@ Inicialmente eu chamava a API com minha chave no front-end, mas após receber um
 - Firebase
 - Render
 
-#### Ambiente de desenvolvimento
+### Ambiente de desenvolvimento
 
 VS Code com as extensões:
 - HTML CSS Support
 
-#### Referências e créditos
+### Referências e créditos
 
 **Chat GPT, exemplo resumido de prompt:**
 >Meu back-end no Replit gerou uma url assim: `https://32f8229d-gsi6-4924-42c8-919416c289b3-00-85lk6nxanqfr.janeway.replit.dev/`, com uma mensagem "_Dev URLs are temporary and will sleep after you leave the workspace._".  
